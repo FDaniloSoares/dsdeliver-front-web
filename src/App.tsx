@@ -1,12 +1,14 @@
 import React from 'react';
 
+import Home from './home';
 import Navbar from './navbar';
 import './App.css';
 
 const App = () => (
-  <div>
+  <>
     <Navbar />
-  </div>
+    <Home />
+  </>
 );
 
 export default App;
