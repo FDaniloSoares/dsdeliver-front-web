@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { OrderPayload } from './orders/types';
 
-const API_URL = 'https://fds-deliver.herokuapp.com';
+const API_URL = process.env.REACT_APP_API_URL;
 const mapboxToken = process.env.REACT_APP_ACCESS_TOKEN_MAP_BOX;
 
 const fetchProducts = () => axios.get(`${API_URL}/products`);
