@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { ReactComponent as InstaIcon } from './instagram.svg';
 import { ReactComponent as LinkedinIcon } from './linkedin.svg';
 import { ReactComponent as YoutubeIcon } from './youtube.svg';

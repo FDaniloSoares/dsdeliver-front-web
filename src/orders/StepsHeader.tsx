@@ -1,5 +1,3 @@
-import React from 'react';
-
 const StepsHeader = () => (
   <header className="orders-steps-container">
     <div className="orders-steps-content">

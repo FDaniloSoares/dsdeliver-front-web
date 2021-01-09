@@ -1,22 +1,20 @@
-import React from 'react';
-
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+import { formatPrice } from './helpers';
 import { Product } from './types';
 
 type Props = {
   product: Product;
+  isSelected: boolean;
+  // eslint-disable-next-line no-unused-vars
+  onSelectProduct: (product: Product) => void;
 }
 
-const formatPrice = (price: number) => {
-  const formatter = new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-    minimumFractionDigits: 2,
-  });
-  return formatter.format(price);
-};
-
-const ProductCard = ({ product }: Props) => (
-  <div className="order-card-container">
+const ProductCard = ({ product, isSelected, onSelectProduct }: Props) => (
+  <div
+    className={`order-card-container ${isSelected ? 'selected' : ''}`}
+    onClick={() => onSelectProduct(product)}
+  >
     <h3 className="order-card-title">
       {product.name}
     </h3>
