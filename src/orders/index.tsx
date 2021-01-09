@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
-import fetchProducts from '../api';
+import fetchProducts, { saveOrder } from '../api';
 import Footer from '../footer';
 import { checkIsSelected } from './helpers';
 import OrderLocation from './OrderLocation';
@@ -15,13 +16,13 @@ import { OrderLocationData, Product } from './types';
 const Order = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
-  const [, setOrderLocation] = useState<OrderLocationData>();
+  const [orderLocation, setOrderLocation] = useState<OrderLocationData>();
   const totalPrice = selectedProducts.reduce((sum, item) => sum + item.price, 0);
 
   useEffect(() => {
     fetchProducts()
       .then((response) => setProducts(response.data))
-      .catch((error) => console.log(error));
+      .catch((error) => toast.warning(error));
   }, []);
 
   const handleSelectProduct = (product: Product) => {
@@ -35,6 +36,21 @@ const Order = () => {
     }
   };
 
+  const handleSubmit = () => {
+    const productsIds = selectedProducts.map(({ id }) => ({ id }));
+    const payload = {
+      ...orderLocation!,
+      products: productsIds,
+    };
+
+    saveOrder(payload).then((response) => {
+      toast.error(`Pedido enviado com sucesso! N° ${response.data.id}`);
+      setSelectedProducts([]);
+    })
+      .catch(() => {
+        toast.warning('Erro ao enviar pedido');
+      });
+  };
   return (
     <>
       <div className="orders-container">
@@ -48,6 +64,7 @@ const Order = () => {
         <OrderSummary
           amount={selectedProducts.length}
           totalPrice={totalPrice}
+          onSubmit={handleSubmit}
         />
       </div>
       <Footer />
